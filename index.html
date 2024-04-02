@@ -225,42 +225,46 @@
         let maxY = Math.max(...allEdgePixels.map(p => p.y));
 
 
-        for (let y = minY; y <= maxY; y++) {
-          let matching = allEdgePixels.filter(p => p.y == y);
-          let minX = Math.min(...matching.map(p => p.x))
-          let maxX = Math.max(...matching.map(p => p.x))
-          for (let x = minX; x <= maxX; x++) {
+        //Uncomment these lines to fill in the triangles
+        //It will not look right because we don't have z-buffering implemented
+        //but it will be close.
+        
+        // for (let y = minY; y <= maxY; y++) {
+        //   let matching = allEdgePixels.filter(p => p.y == y);
+        //   let minX = Math.min(...matching.map(p => p.x))
+        //   let maxX = Math.max(...matching.map(p => p.x))
+        //   for (let x = minX; x <= maxX; x++) {
 
-            //Now calculate the color
-            let toSun = new Vertex3(1,0,1).getNormalized();
-            let diffuse = normal.getDot(toSun);
-            diffuse = Math.max(0, diffuse)
-            let r = 255;
-            let g = 255;
-            let b = 255;
+        //     //Now calculate the color
+        //     let toSun = new Vertex3(1,0,1).getNormalized();
+        //     let diffuse = normal.getDot(toSun);
+        //     diffuse = Math.max(0, diffuse)
+        //     let r = 255;
+        //     let g = 255;
+        //     let b = 255;
 
-            r *= diffuse
-            g *= diffuse;
-            b *= diffuse
+        //     r *= diffuse
+        //     g *= diffuse;
+        //     b *= diffuse
 
-            let ambient = 50;
-            r += ambient;
-            g += ambient;
-            b += ambient;
+        //     let ambient = 50;
+        //     r += ambient;
+        //     g += ambient;
+        //     b += ambient;
 
-            r = Math.max(0, Math.min(255, r))
-            g = Math.max(0, Math.min(255, g))
-            b = Math.max(0, Math.min(255, b))
+        //     r = Math.max(0, Math.min(255, r))
+        //     g = Math.max(0, Math.min(255, g))
+        //     b = Math.max(0, Math.min(255, b))
 
-            zBuffer[x][y] = new Pixel(x, y, r, g, b)
-          }
-        }
-
-        // for (let pixel of allEdgePixels) {
-        //   let x = Math.max(0, pixel.x);
-        //   let y = Math.max(0, pixel.y);
-        //   zBuffer[x][y] = pixel
+        //     zBuffer[x][y] = new Pixel(x, y, r, g, b)
+        //   }
         // }
+
+        for (let pixel of allEdgePixels) {
+          let x = Math.max(0, pixel.x);
+          let y = Math.max(0, pixel.y);
+          zBuffer[x][y] = pixel
+        }
 
 
 
